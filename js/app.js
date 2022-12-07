@@ -40,6 +40,27 @@ ShopLocation.prototype.generateDailyCookies = function() {
   this.totalDailyCookies = totalCookies;
 };
 
+ShopLocation.prototype.renderShopData = function() {
+  const parentEl = document.querySelector('tbody');
+  const rowEl = document.createElement('tr');
+
+  const locationNameEl = document.createElement('th');
+  locationNameEl.innerText = this.name;
+  rowEl.appendChild(locationNameEl);
+
+  for (let i = 0; i < this.hourlyCookieTotals.length; i++) {
+    const newHourEl = document.createElement('td');
+    newHourEl.innerText = this.hourlyCookieTotals[i];
+    rowEl.appendChild(newHourEl);
+  }
+
+  const shopTotalEl = document.createElement('th');
+  shopTotalEl.innerText = this.totalDailyCookies;
+  rowEl.appendChild(shopTotalEl);
+
+  parentEl.appendChild(rowEl);
+};
+
 const locationDataArray = [
   {
     name: 'Seattle',
@@ -135,6 +156,7 @@ for (let i = 0; i < locationDataArray.length; i++) {
   const location = locationDataArray[i];
   const currentShop = new ShopLocation(location.name, location.minHourlyCustomers, location.maxHourlyCustomers, location.avgCookiesPerCustomer);
   currentShop.generateDailyCookies();
+  currentShop.renderShopData();
 
   console.log(currentShop.name, currentShop.hourlyCookieTotals, currentShop.totalDailyCookies);
 
