@@ -2,6 +2,17 @@
 
 const hoursArray = ['6am', '7am', '8am', '9am', '10am', '11am', '12am', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm'];
 
+const hourlyDataArray = [];
+for (let i = 0; i < hoursArray.length; i++) {
+  const newHour = {
+    time: hoursArray[i],
+    totalCookies: 0,
+    trafficAdjust: null
+  };
+  hourlyDataArray.push(newHour);
+}
+
+
 function ShopLocation(name, minHourlyCustomers, maxHourlyCustomers, avgCookiesPerCustomer) {
   this.name = name;
   this.minHourlyCustomers = minHourlyCustomers;
@@ -21,6 +32,7 @@ ShopLocation.prototype.generateDailyCookies = function() {
   for (let i = 0; i < hoursArray.length; i++) {
     const hourlyCookies = this.generateHourlyCookies();
     this.hourlyCookieTotals.push(hourlyCookies);
+    hourlyDataArray[i].totalCookies += hourlyCookies;
     totalCookies += hourlyCookies;
   }
   this.totalDailyCookies = totalCookies;
@@ -76,15 +88,18 @@ function renderDailySales(location) {
   parentElement.appendChild(listElement);
 }
 
+// function renderTableHead(){
+
+// }
 
 for (let i = 0; i < locationDataArray.length; i++) {
   const location = locationDataArray[i];
   const currentShop = new ShopLocation(location.name, location.minHourlyCustomers, location.maxHourlyCustomers, location.avgCookiesPerCustomer);
   currentShop.generateDailyCookies();
-  console.log(currentShop.hourlyCookieTotals, currentShop.totalDailyCookies);
+  console.log(currentShop.name, currentShop.hourlyCookieTotals, currentShop.totalDailyCookies);
 
-  // location.cookiesPerDay();
   // renderDailySales(location);
   // console.log(location.location, location.dailyCookies, `Total = ${location.dailyCookies[hoursArray.length]}`);
 }
+console.log(hourlyDataArray);
 
