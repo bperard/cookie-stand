@@ -2,6 +2,32 @@
 
 const hoursArray = ['6am', '7am', '8am', '9am', '10am', '11am', '12am', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm'];
 
+function ShopLocation(name, minHourlyCustomers, maxHourlyCustomers, avgCookiesPerCustomer) {
+  this.name = name;
+  this.minHourlyCustomers = minHourlyCustomers;
+  this.maxHourlyCustomers = maxHourlyCustomers;
+  this.avgCookiesPerCustomer = avgCookiesPerCustomer;
+  this.hourlyCookieTotals = [];
+  this.totalDailyCookies = 0;
+}
+
+ShopLocation.prototype.totalHourlyCookies = function() {
+  const hourlyCustomers = Math.floor(Math.random() * (this.maxHourlyCustomers - this.minHourlyCustomers + 1) + this.minHourlyCustomers);
+  return Math.ceil(hourlyCustomers * this.averageCookiesPerCustomer);
+};
+
+ShopLocation.prototype.totalDailyCookies = function() {
+    let totalCookies = 0;
+    for (let i = 0; i < hoursArray.length; i++) {
+      const hourlyCookies = this.totalHourlyCookies();
+      this.hourlyCookieTotals.push(hourlyCookies);
+      totalCookies += hourlyCookies;
+    }
+    this.totalDailyCookies = totalCookies;
+  }
+
+
+
 function renderDailySales(location) {
   const parentElement = document.querySelector('#location-sales');
   const headerElement = document.createElement('h3');
