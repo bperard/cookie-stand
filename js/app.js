@@ -1,5 +1,7 @@
 'use strict';
 
+// PROVIDED DATA
+
 const hoursArray = ['6am', '7am', '8am', '9am', '10am', '11am', '12am', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm'];
 
 const hourlyDataArray = [];
@@ -12,6 +14,40 @@ for (let i = 0; i < hoursArray.length; i++) {
   hourlyDataArray.push(newHour);
 }
 
+const locationDataArray = [
+  {
+    name: 'Seattle',
+    minHourlyCustomers: 23,
+    maxHourlyCustomers: 65,
+    avgCookiesPerCustomer: 6.3,
+  },
+  {
+    name: 'Tokyo',
+    minHourlyCustomers: 3,
+    maxHourlyCustomers: 24,
+    avgCookiesPerCustomer: 1.2,
+  },
+  {
+    name: 'Dubai',
+    minHourlyCustomers: 11,
+    maxHourlyCustomers: 38,
+    avgCookiesPerCustomer: 3.7,
+  },
+  {
+    name: 'Paris',
+    minHourlyCustomers: 20,
+    maxHourlyCustomers: 38,
+    avgCookiesPerCustomer: 2.3,
+  },
+  {
+    name: 'Lima',
+    minHourlyCustomers: 2,
+    maxHourlyCustomers: 16,
+    avgCookiesPerCustomer: 4.6,
+  },
+];
+
+// CONSTRUCTOR
 
 function ShopLocation(name, minHourlyCustomers, maxHourlyCustomers, avgCookiesPerCustomer) {
   this.name = name;
@@ -21,6 +57,8 @@ function ShopLocation(name, minHourlyCustomers, maxHourlyCustomers, avgCookiesPe
   this.hourlyCookieTotals = [];
   this.totalDailyCookies = 0;
 }
+
+// CONSTRUCTOR METHODS
 
 ShopLocation.prototype.generateHourlyCookies = function() {
   const hourlyCustomers = Math.floor(Math.random() * (this.maxHourlyCustomers - this.minHourlyCustomers + 1) + this.minHourlyCustomers);
@@ -61,55 +99,7 @@ ShopLocation.prototype.renderShopData = function() {
   parentEl.appendChild(rowEl);
 };
 
-const locationDataArray = [
-  {
-    name: 'Seattle',
-    minHourlyCustomers: 23,
-    maxHourlyCustomers: 65,
-    avgCookiesPerCustomer: 6.3,
-  },
-  {
-    name: 'Tokyo',
-    minHourlyCustomers: 3,
-    maxHourlyCustomers: 24,
-    avgCookiesPerCustomer: 1.2,
-  },
-  {
-    name: 'Dubai',
-    minHourlyCustomers: 11,
-    maxHourlyCustomers: 38,
-    avgCookiesPerCustomer: 3.7,
-  },
-  {
-    name: 'Paris',
-    minHourlyCustomers: 20,
-    maxHourlyCustomers: 38,
-    avgCookiesPerCustomer: 2.3,
-  },
-  {
-    name: 'Lima',
-    minHourlyCustomers: 2,
-    maxHourlyCustomers: 16,
-    avgCookiesPerCustomer: 4.6,
-  },
-];
-
-function renderDailySales(location) {
-  const parentElement = document.querySelector('#location-sales');
-  const headerElement = document.createElement('h3');
-  headerElement.innerText = location.locationName;
-  parentElement.appendChild(headerElement);
-  const listElement = document.createElement('ul');
-  for (let i = 0; i < hoursArray.length; i++) {
-    const listItemElement = document.createElement('li');
-    listItemElement.innerText = `${hoursArray[i]}: ${location.dailyCookies[i]}`;
-    listElement.appendChild(listItemElement);
-  }
-  const finalListItemElement = document.createElement('li');
-  finalListItemElement.innerText = `Total = ${location.dailyCookies[hoursArray.length]}`;
-  listElement.appendChild(finalListItemElement);
-  parentElement.appendChild(listElement);
-}
+// RENDER METHODS
 
 function renderTableHead(){
   const parentEl = document.querySelector('thead');
@@ -150,6 +140,8 @@ function renderTableFoot(){
   parentEl.appendChild(rowEl);
 }
 
+// RENDER HTML
+
 renderTableHead();
 
 for (let i = 0; i < locationDataArray.length; i++) {
@@ -157,13 +149,6 @@ for (let i = 0; i < locationDataArray.length; i++) {
   const currentShop = new ShopLocation(location.name, location.minHourlyCustomers, location.maxHourlyCustomers, location.avgCookiesPerCustomer);
   currentShop.generateDailyCookies();
   currentShop.renderShopData();
-
-  console.log(currentShop.name, currentShop.hourlyCookieTotals, currentShop.totalDailyCookies);
-
-  // renderDailySales(location);
-  // console.log(location.location, location.dailyCookies, `Total = ${location.dailyCookies[hoursArray.length]}`);
 }
 
 renderTableFoot();
-console.log(hourlyDataArray);
-
