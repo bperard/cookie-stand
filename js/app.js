@@ -11,22 +11,53 @@ function ShopLocation(name, minHourlyCustomers, maxHourlyCustomers, avgCookiesPe
   this.totalDailyCookies = 0;
 }
 
-ShopLocation.prototype.totalHourlyCookies = function() {
+ShopLocation.prototype.generateHourlyCookies = function() {
   const hourlyCustomers = Math.floor(Math.random() * (this.maxHourlyCustomers - this.minHourlyCustomers + 1) + this.minHourlyCustomers);
-  return Math.ceil(hourlyCustomers * this.averageCookiesPerCustomer);
+  return Math.ceil(hourlyCustomers * this.avgCookiesPerCustomer);
 };
 
-ShopLocation.prototype.totalDailyCookies = function() {
-    let totalCookies = 0;
-    for (let i = 0; i < hoursArray.length; i++) {
-      const hourlyCookies = this.totalHourlyCookies();
-      this.hourlyCookieTotals.push(hourlyCookies);
-      totalCookies += hourlyCookies;
-    }
-    this.totalDailyCookies = totalCookies;
+ShopLocation.prototype.generateDailyCookies = function() {
+  let totalCookies = 0;
+  for (let i = 0; i < hoursArray.length; i++) {
+    const hourlyCookies = this.generateHourlyCookies();
+    this.hourlyCookieTotals.push(hourlyCookies);
+    totalCookies += hourlyCookies;
   }
+  this.totalDailyCookies = totalCookies;
+};
 
-
+const locationDataArray = [
+  {
+    name: 'Seattle',
+    minHourlyCustomers: 23,
+    maxHourlyCustomers: 65,
+    avgCookiesPerCustomer: 6.3,
+  },
+  {
+    name: 'Tokyo',
+    minHourlyCustomers: 3,
+    maxHourlyCustomers: 24,
+    avgCookiesPerCustomer: 1.2,
+  },
+  {
+    name: 'Dubai',
+    minHourlyCustomers: 11,
+    maxHourlyCustomers: 38,
+    avgCookiesPerCustomer: 3.7,
+  },
+  {
+    name: 'Paris',
+    minHourlyCustomers: 20,
+    maxHourlyCustomers: 38,
+    avgCookiesPerCustomer: 2.3,
+  },
+  {
+    name: 'Lima',
+    minHourlyCustomers: 2,
+    maxHourlyCustomers: 16,
+    avgCookiesPerCustomer: 4.6,
+  },
+];
 
 function renderDailySales(location) {
   const parentElement = document.querySelector('#location-sales');
@@ -45,116 +76,15 @@ function renderDailySales(location) {
   parentElement.appendChild(listElement);
 }
 
-const Seattle = {
-  locationName: 'Seattle',
-  minHourlyCustomers: 23,
-  maxHourlyCustomers: 65,
-  averageCookiesPerCustomer: 6.3,
-  dailyCookies: [],
-  cookiesPerHour: function (){
-    const hourlyCustomers = Math.floor(Math.random() * (this.maxHourlyCustomers - this.minHourlyCustomers + 1) + this.minHourlyCustomers);
-    return Math.ceil(hourlyCustomers * this.averageCookiesPerCustomer);
-  },
-  cookiesPerDay: function (){
-    let totalCookies = 0;
-    for (let i = 0; i < hoursArray.length; i++) {
-      const hourlyCookies = this.cookiesPerHour();
-      this.dailyCookies.push(hourlyCookies);
-      totalCookies += hourlyCookies;
-    }
-    this.dailyCookies.push(totalCookies);
-  }
-};
 
-const Tokyo = {
-  locationName: 'Tokyo',
-  minHourlyCustomers: 3,
-  maxHourlyCustomers: 24,
-  averageCookiesPerCustomer: 1.2,
-  dailyCookies: [],
-  cookiesPerHour: function (){
-    const hourlyCustomers = Math.floor(Math.random() * (this.maxHourlyCustomers - this.minHourlyCustomers + 1) + this.minHourlyCustomers);
-    return Math.ceil(hourlyCustomers * this.averageCookiesPerCustomer);
-  },
-  cookiesPerDay: function (){
-    let totalCookies = 0;
-    for (let i = 0; i < hoursArray.length; i++) {
-      const hourlyCookies = this.cookiesPerHour();
-      this.dailyCookies.push(hourlyCookies);
-      totalCookies += hourlyCookies;
-    }
-    this.dailyCookies.push(totalCookies);
-  }
-};
+for (let i = 0; i < locationDataArray.length; i++) {
+  const location = locationDataArray[i];
+  const currentShop = new ShopLocation(location.name, location.minHourlyCustomers, location.maxHourlyCustomers, location.avgCookiesPerCustomer);
+  currentShop.generateDailyCookies();
+  console.log(currentShop.hourlyCookieTotals, currentShop.totalDailyCookies);
 
-const Dubai = {
-  locationName: 'Dubai',
-  minHourlyCustomers: 11,
-  maxHourlyCustomers: 38,
-  averageCookiesPerCustomer: 3.7,
-  dailyCookies: [],
-  cookiesPerHour: function (){
-    const hourlyCustomers = Math.floor(Math.random() * (this.maxHourlyCustomers - this.minHourlyCustomers + 1) + this.minHourlyCustomers);
-    return Math.ceil(hourlyCustomers * this.averageCookiesPerCustomer);
-  },
-  cookiesPerDay: function (){
-    let totalCookies = 0;
-    for (let i = 0; i < hoursArray.length; i++) {
-      const hourlyCookies = this.cookiesPerHour();
-      this.dailyCookies.push(hourlyCookies);
-      totalCookies += hourlyCookies;
-    }
-    this.dailyCookies.push(totalCookies);
-  }
-};
-
-const Paris = {
-  locationName: 'Paris',
-  minHourlyCustomers: 20,
-  maxHourlyCustomers: 38,
-  averageCookiesPerCustomer: 2.3,
-  dailyCookies: [],
-  cookiesPerHour: function (){
-    const hourlyCustomers = Math.floor(Math.random() * (this.maxHourlyCustomers - this.minHourlyCustomers + 1) + this.minHourlyCustomers);
-    return Math.ceil(hourlyCustomers * this.averageCookiesPerCustomer);
-  },
-  cookiesPerDay: function (){
-    let totalCookies = 0;
-    for (let i = 0; i < hoursArray.length; i++) {
-      const hourlyCookies = this.cookiesPerHour();
-      this.dailyCookies.push(hourlyCookies);
-      totalCookies += hourlyCookies;
-    }
-    this.dailyCookies.push(totalCookies);
-  }
-};
-
-const Lima = {
-  locationName: 'Lima',
-  minHourlyCustomers: 2,
-  maxHourlyCustomers: 16,
-  averageCookiesPerCustomer: 4.6,
-  dailyCookies: [],
-  cookiesPerHour: function (){
-    const hourlyCustomers = Math.floor(Math.random() * (this.maxHourlyCustomers - this.minHourlyCustomers + 1) + this.minHourlyCustomers);
-    return Math.ceil(hourlyCustomers * this.averageCookiesPerCustomer);
-  },
-  cookiesPerDay: function (){
-    let totalCookies = 0;
-    for (let i = 0; i < hoursArray.length; i++) {
-      const hourlyCookies = this.cookiesPerHour();
-      this.dailyCookies.push(hourlyCookies);
-      totalCookies += hourlyCookies;
-    }
-    this.dailyCookies.push(totalCookies);
-  }
-};
-
-const locationsArray = [Seattle, Tokyo, Dubai, Paris, Lima];
-
-for (let i = 0; i < locationsArray.length; i++) {
-  const location = locationsArray[i];
-  location.cookiesPerDay();
-  renderDailySales(location);
+  // location.cookiesPerDay();
+  // renderDailySales(location);
   // console.log(location.location, location.dailyCookies, `Total = ${location.dailyCookies[hoursArray.length]}`);
 }
+
