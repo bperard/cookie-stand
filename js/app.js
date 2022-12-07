@@ -2,8 +2,25 @@
 
 const hoursArray = ['6am', '7am', '8am', '9am', '10am', '11am', '12am', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm'];
 
+function renderDailySales(location) {
+  const parentElement = document.querySelector('#location-sales');
+  const headerElement = document.createElement('h3');
+  headerElement.innerText = location.locationName;
+  parentElement.appendChild(headerElement);
+  const listElement = document.createElement('ul');
+  for (let i = 0; i < hoursArray.length; i++) {
+    const listItemElement = document.createElement('li');
+    listItemElement.innerText = `${hoursArray[i]}: ${location.dailyCookies[i]}`;
+    listElement.appendChild(listItemElement);
+  }
+  const finalListItemElement = document.createElement('li');
+  finalListItemElement.innerText = `Total = ${location.dailyCookies[hoursArray.length]}`;
+  listElement.appendChild(finalListItemElement);
+  parentElement.appendChild(listElement);
+}
+
 const Seattle = {
-  location: 'Seattle',
+  locationName: 'Seattle',
   minHourlyCustomers: 23,
   maxHourlyCustomers: 65,
   averageCookiesPerCustomer: 6.3,
@@ -24,7 +41,7 @@ const Seattle = {
 };
 
 const Tokyo = {
-  location: 'Tokyo',
+  locationName: 'Tokyo',
   minHourlyCustomers: 3,
   maxHourlyCustomers: 24,
   averageCookiesPerCustomer: 1.2,
@@ -45,7 +62,7 @@ const Tokyo = {
 };
 
 const Dubai = {
-  location: 'Dubai',
+  locationName: 'Dubai',
   minHourlyCustomers: 11,
   maxHourlyCustomers: 38,
   averageCookiesPerCustomer: 3.7,
@@ -66,7 +83,7 @@ const Dubai = {
 };
 
 const Paris = {
-  location: 'Paris',
+  locationName: 'Paris',
   minHourlyCustomers: 20,
   maxHourlyCustomers: 38,
   averageCookiesPerCustomer: 2.3,
@@ -87,7 +104,7 @@ const Paris = {
 };
 
 const Lima = {
-  location: 'Lima',
+  locationName: 'Lima',
   minHourlyCustomers: 2,
   maxHourlyCustomers: 16,
   averageCookiesPerCustomer: 4.6,
@@ -110,6 +127,8 @@ const Lima = {
 const locationsArray = [Seattle, Tokyo, Dubai, Paris, Lima];
 
 for (let i = 0; i < locationsArray.length; i++) {
-  locationsArray[i].cookiesPerDay();
-  console.log(locationsArray[i].location, locationsArray[i].dailyCookies, `Total = ${locationsArray[i].dailyCookies[hoursArray.length]}`);
+  const location = locationsArray[i];
+  location.cookiesPerDay();
+  renderDailySales(location);
+  // console.log(location.location, location.dailyCookies, `Total = ${location.dailyCookies[hoursArray.length]}`);
 }
