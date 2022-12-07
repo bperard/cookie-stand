@@ -1,51 +1,115 @@
 'use strict';
 
-let shopLocation = {
-  minHourlyCustomers: 8,
-  maxHourlyCustomers: 20,
-  averageCookiesPerCustomer: 4,
+const hoursArray = ['6am', '7am', '8am', '9am', '10am', '11am', '12am', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm'];
+
+const Seattle = {
+  location: 'Seattle',
+  minHourlyCustomers: 23,
+  maxHourlyCustomers: 65,
+  averageCookiesPerCustomer: 6.3,
+  dailyCookies: [],
   cookiesPerHour: function (){
     const hourlyCustomers = Math.floor(Math.random() * (this.maxHourlyCustomers - this.minHourlyCustomers + 1) + this.minHourlyCustomers);
-    return hourlyCustomers * this.averageCookiesPerCustomer;
+    return Math.ceil(hourlyCustomers * this.averageCookiesPerCustomer);
+  },
+  cookiesPerDay: function (){
+    let totalCookies = 0;
+    for (let i = 0; i < hoursArray.length; i++) {
+      const hourlyCookies = this.cookiesPerHour();
+      this.dailyCookies.push(hourlyCookies);
+      totalCookies += hourlyCookies;
+    }
+    this.dailyCookies.push(totalCookies);
   }
 };
 
-console.log(shopLocation.cookiesPerHour());
+const Tokyo = {
+  location: 'Tokyo',
+  minHourlyCustomers: 3,
+  maxHourlyCustomers: 24,
+  averageCookiesPerCustomer: 1.2,
+  dailyCookies: [],
+  cookiesPerHour: function (){
+    const hourlyCustomers = Math.floor(Math.random() * (this.maxHourlyCustomers - this.minHourlyCustomers + 1) + this.minHourlyCustomers);
+    return Math.ceil(hourlyCustomers * this.averageCookiesPerCustomer);
+  },
+  cookiesPerDay: function (){
+    let totalCookies = 0;
+    for (let i = 0; i < hoursArray.length; i++) {
+      const hourlyCookies = this.cookiesPerHour();
+      this.dailyCookies.push(hourlyCookies);
+      totalCookies += hourlyCookies;
+    }
+    this.dailyCookies.push(totalCookies);
+  }
+};
 
-// Within your javascript file, create separate JS object literals for each shop location. Each location will be responsible for generating sales data and providing output on an html document. You should be able to perform the following tasks in your javascript file:
+const Dubai = {
+  location: 'Dubai',
+  minHourlyCustomers: 11,
+  maxHourlyCustomers: 38,
+  averageCookiesPerCustomer: 3.7,
+  dailyCookies: [],
+  cookiesPerHour: function (){
+    const hourlyCustomers = Math.floor(Math.random() * (this.maxHourlyCustomers - this.minHourlyCustomers + 1) + this.minHourlyCustomers);
+    return Math.ceil(hourlyCustomers * this.averageCookiesPerCustomer);
+  },
+  cookiesPerDay: function (){
+    let totalCookies = 0;
+    for (let i = 0; i < hoursArray.length; i++) {
+      const hourlyCookies = this.cookiesPerHour();
+      this.dailyCookies.push(hourlyCookies);
+      totalCookies += hourlyCookies;
+    }
+    this.dailyCookies.push(totalCookies);
+  }
+};
 
-// Store the min/max hourly customers, and the average cookies per customer, in object properties.
-// Use a method of that object to generate a random number of customers per hour. Objects/Math/random
-// Calculate and store the simulated amounts of cookies purchased for each hour at each location using average cookies purchased and the random number of customers generated.
-// Store the results for each location in a separate array… perhaps as a property of the object representing that location.
-// Display the values of each array as unordered lists in the browser.
-// Calculating the sum of these hourly totals; your output for each location should look like this:
+const Paris = {
+  location: 'Paris',
+  minHourlyCustomers: 20,
+  maxHourlyCustomers: 38,
+  averageCookiesPerCustomer: 2.3,
+  dailyCookies: [],
+  cookiesPerHour: function (){
+    const hourlyCustomers = Math.floor(Math.random() * (this.maxHourlyCustomers - this.minHourlyCustomers + 1) + this.minHourlyCustomers);
+    return Math.ceil(hourlyCustomers * this.averageCookiesPerCustomer);
+  },
+  cookiesPerDay: function (){
+    let totalCookies = 0;
+    for (let i = 0; i < hoursArray.length; i++) {
+      const hourlyCookies = this.cookiesPerHour();
+      this.dailyCookies.push(hourlyCookies);
+      totalCookies += hourlyCookies;
+    }
+    this.dailyCookies.push(totalCookies);
+  }
+};
 
-// Seattle
+const Lima = {
+  location: 'Lima',
+  minHourlyCustomers: 2,
+  maxHourlyCustomers: 16,
+  averageCookiesPerCustomer: 4.6,
+  dailyCookies: [],
+  cookiesPerHour: function (){
+    const hourlyCustomers = Math.floor(Math.random() * (this.maxHourlyCustomers - this.minHourlyCustomers + 1) + this.minHourlyCustomers);
+    return Math.ceil(hourlyCustomers * this.averageCookiesPerCustomer);
+  },
+  cookiesPerDay: function (){
+    let totalCookies = 0;
+    for (let i = 0; i < hoursArray.length; i++) {
+      const hourlyCookies = this.cookiesPerHour();
+      this.dailyCookies.push(hourlyCookies);
+      totalCookies += hourlyCookies;
+    }
+    this.dailyCookies.push(totalCookies);
+  }
+};
 
-// 6am: 16 cookies
-// 7am: 20 cookies
-// 8am: 35 cookies
-// 9am: 48 cookies
-// 10am: 56 cookies
-// 11am: 77 cookies
-// 12pm: 93 cookies
-// 1pm: 144 cookies
-// 2pm: 119 cookies
-// 3pm: 84 cookies
-// 4pm: 61 cookies
-// 5pm: 23 cookies
-// 6pm: 42 cookies
-// 7pm: 57 cookies
-// Total: 875 cookies
-// Display the lists on sales.html. We will be adding features to this application and working with its layout in the upcoming labs.
+const locationsArray = [Seattle, Tokyo, Dubai, Paris, Lima];
 
-// Here are the starting numbers that you’ll need to build these objects:
-
-// Location	Min / Cust	Max / Cust	Avg Cookie / Sale
-// Seattle	23	65	6.3
-// Tokyo	3	24	1.2
-// Dubai	11	38	3.7
-// Paris	20	38	2.3
-// Lima	2	16	4.6
-// These numbers are simply Pat’s estimates for now, but eventually, once there has been some history collected that provides more accurate numbers, we’ll want the ability to update these numbers for each location, and to add/remove locations. But we’ll not build all of that today. Make sure to make each location is its own JavaScript object.
+for (let i = 0; i < locationsArray.length; i++) {
+  locationsArray[i].cookiesPerDay();
+  console.log(locationsArray[i].location, locationsArray[i].dailyCookies, `Total = ${locationsArray[i].dailyCookies[hoursArray.length]}`);
+}
