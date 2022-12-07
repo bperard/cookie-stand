@@ -29,12 +29,14 @@ ShopLocation.prototype.generateHourlyCookies = function() {
 
 ShopLocation.prototype.generateDailyCookies = function() {
   let totalCookies = 0;
+
   for (let i = 0; i < hoursArray.length; i++) {
     const hourlyCookies = this.generateHourlyCookies();
     this.hourlyCookieTotals.push(hourlyCookies);
     hourlyDataArray[i].totalCookies += hourlyCookies;
     totalCookies += hourlyCookies;
   }
+
   this.totalDailyCookies = totalCookies;
 };
 
@@ -88,18 +90,58 @@ function renderDailySales(location) {
   parentElement.appendChild(listElement);
 }
 
-// function renderTableHead(){
+function renderTableHead(){
+  const parentEl = document.querySelector('thead');
+  const rowEl = document.createElement('tr');
 
-// }
+  const emptyCorner = document.createElement('td');
+  rowEl.appendChild(emptyCorner);
+
+  for (let i = 0; i < hoursArray.length; i++) {
+    const newHourEl = document.createElement('th');
+    newHourEl.innerText = hoursArray[i];
+    rowEl.appendChild(newHourEl);
+  }
+
+  parentEl.appendChild(rowEl);
+}
+
+function renderTableFoot(){
+  const parentEl = document.querySelector('tfoot');
+  const rowEl = document.createElement('tr');
+
+  const totalLabel = document.createElement('th');
+  totalLabel.innerText = 'TOTAL';
+  rowEl.appendChild(totalLabel);
+
+  let totalDailyCookies = 0;
+  for (let i = 0; i < hourlyDataArray.length; i++) {
+    const newHourEl = document.createElement('th');
+    newHourEl.innerText = hourlyDataArray[i].totalCookies;
+    rowEl.appendChild(newHourEl);
+
+    totalDailyCookies += hourlyDataArray[i].totalCookies;
+  }
+
+  const totalDailyCookiesEl = document.createElement('th');
+  totalDailyCookiesEl.innerText = totalDailyCookies;
+  rowEl.appendChild(totalDailyCookiesEl);
+  parentEl.appendChild(rowEl);
+}
+
+renderTableHead();
 
 for (let i = 0; i < locationDataArray.length; i++) {
   const location = locationDataArray[i];
   const currentShop = new ShopLocation(location.name, location.minHourlyCustomers, location.maxHourlyCustomers, location.avgCookiesPerCustomer);
   currentShop.generateDailyCookies();
+
   console.log(currentShop.name, currentShop.hourlyCookieTotals, currentShop.totalDailyCookies);
 
   // renderDailySales(location);
   // console.log(location.location, location.dailyCookies, `Total = ${location.dailyCookies[hoursArray.length]}`);
 }
+
+renderTableFoot();
 console.log(hourlyDataArray);
 
