@@ -154,8 +154,6 @@ const form = document.querySelector('form');
 form.addEventListener('click', function(event) {
   event.preventDefault();
 
-  // **ADD VALIDATION FOR INPUTS (PRESENT), MIN < MAX, AND AVG > 0?**
-
   if (event.target.name === 'submit') {
     const location = {
       name: form['location-name'].value,
@@ -163,8 +161,22 @@ form.addEventListener('click', function(event) {
       maxHourlyCustomers: form['max-hourly-customers'].value,
       avgCookiesPerCustomer: form['avg-cookies-per-customer'].value
     };
-    renderLocation(location);
-    renderTableFoot();
+    if (location.name !== '' && location.minHourlyCustomers > 0 && location.maxHourlyCustomers > 0 && location.avgCookiesPerCustomer > 0) {
+      if (location.minHourlyCustomers < location.maxHourlyCustomers) {
+        renderLocation(location);
+        renderTableFoot();
+
+        form['location-name'].value = '';
+        form['min-hourly-customers'].value = null;
+        form['max-hourly-customers'].value = null;
+        form['avg-cookies-per-customer'].value = null;
+
+      } else {
+        alert('Max Customers/Hr should be greater than Min Customers/Hr');
+      }
+    } else {
+      alert('Fill in all values before adding location');
+    }
   }
 });
 
