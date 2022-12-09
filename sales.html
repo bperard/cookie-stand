@@ -11,16 +11,35 @@
 <body>
   <h1>Salmon Cookie Sales</h1>
   <a href="index.html">HOME</a>
+  <form>
+    <fieldset>
+      <legend>Add New Shop Location</legend>
+      <label>
+        <input type="text" name="location-name" placeholder="Shop Location Name" required>
+      </label>
+      <label>
+        <input type="number" min="0" name="min-hourly-customers" placeholder="Min Customers/Hr" required>
+      </label>
+      <label>
+        <input type="number" min="0" name="max-hourly-customers" placeholder="Max Customers/Hr" required>
+      </label>
+      <label>
+        <input type="number" step="0.1" min="0" name="avg-cookies-per-customer" placeholder="Avg Cookies/Customer" required>
+      </label>
+      <button name="submit">SUBMIT</button>
+    </fieldset>
+  </form>
   <section id="location-sales">
+    <h2>Shop Locations & Sales</h2>
     <table>
       <thead>
 
       </thead>
       <tbody>
-        
+
       </tbody>
       <tfoot>
-        
+
       </tfoot>
     </table>
   </section>

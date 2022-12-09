@@ -101,6 +101,12 @@ ShopLocation.prototype.renderShopData = function() {
 
 // RENDER METHODS
 
+function renderLocation(location){
+  const currentShop = new ShopLocation(location.name, location.minHourlyCustomers, location.maxHourlyCustomers, location.avgCookiesPerCustomer);
+  currentShop.generateDailyCookies();
+  currentShop.renderShopData();
+}
+
 function renderTableHead(){
   const parentEl = document.querySelector('thead');
   const rowEl = document.createElement('tr');
@@ -119,6 +125,8 @@ function renderTableHead(){
 
 function renderTableFoot(){
   const parentEl = document.querySelector('tfoot');
+  parentEl.innerHTML = '';
+
   const rowEl = document.createElement('tr');
 
   const totalLabel = document.createElement('th');
@@ -140,15 +148,45 @@ function renderTableFoot(){
   parentEl.appendChild(rowEl);
 }
 
+// EVENT LISTENERS
+
+const form = document.querySelector('form');
+form.addEventListener('click', function(event) {
+  event.preventDefault();
+
+  if (event.target.name === 'submit') {
+    const location = {
+      name: form['location-name'].value,
+      minHourlyCustomers: form['min-hourly-customers'].value,
+      maxHourlyCustomers: form['max-hourly-customers'].value,
+      avgCookiesPerCustomer: form['avg-cookies-per-customer'].value
+    };
+    if (location.name !== '' && location.minHourlyCustomers > 0 && location.maxHourlyCustomers > 0 && location.avgCookiesPerCustomer > 0) {
+      if (location.minHourlyCustomers < location.maxHourlyCustomers) {
+        renderLocation(location);
+        renderTableFoot();
+
+        form['location-name'].value = '';
+        form['min-hourly-customers'].value = null;
+        form['max-hourly-customers'].value = null;
+        form['avg-cookies-per-customer'].value = null;
+
+      } else {
+        alert('Max Customers/Hr should be greater than Min Customers/Hr');
+      }
+    } else {
+      alert('Fill in all values before adding location');
+    }
+  }
+});
+
 // RENDER HTML
 
 renderTableHead();
 
 for (let i = 0; i < locationDataArray.length; i++) {
   const location = locationDataArray[i];
-  const currentShop = new ShopLocation(location.name, location.minHourlyCustomers, location.maxHourlyCustomers, location.avgCookiesPerCustomer);
-  currentShop.generateDailyCookies();
-  currentShop.renderShopData();
+  renderLocation(location);
 }
 
 renderTableFoot();
