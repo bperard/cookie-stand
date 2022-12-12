@@ -1,58 +1,112 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hanalei+Fill&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/style.css">
   <title>Salmon Cookies</title>
 </head>
-<body>
-  <h1>Salmon Cookies</h1>
-  <a href="sales.html">Shop Sales</a>
 
+<body>
+  <header>
+    <h1>Salmon Cookies</h1>
+    <a href="sales.html">Shop Sales</a>
+  </header>
+
+  <section id="shopLocations">
+
+  </section>
+
+  <p>We even have MERCH!</p>
+  <img src="img/shirt.jpg">
+
+  <p>I bought MERCH with my SALMON COOKIES and then I received a FAMILY!</p>
+
+  <img src="img/family.jpg">
 
   <script>
     'use strict';
 
+    const imageArray = [
+      'img/chinook.jpg',
+      'img/cutter.jpeg',
+      'img/fish.jpg',
+      'img/frosted-cookie.jpg',
+      'img/salmon.png'
+    ]
+
     const locationDataArray = [
-  {
-    name: 'Seattle',
-    address: ,
-    hours: '6am-8pm',
-    phone: ,
-    email: ,
-  },
-  {
-    name: 'Tokyo',
-    address: ,
-    hours: '6am-8pm',
-    phone: ,
-    email: ,
-  },
-  {
-    name: 'Dubai',
-    address: ,
-    hours: '6am-8pm',
-    phone: ,
-    email: ,
-  },
-  {
-    name: 'Paris',
-    address: ,
-    hours: '6am-8pm',
-    phone: ,
-    email: ,
-  },
-  {
-    name: 'Lima',
-    address: ,
-    hours: '6am-8pm',
-    phone: ,
-    email: ,
-  },
-];
+      {
+        name: 'Seattle',
+        address: 'Fremont',
+        hours: '6am-8pm',
+        phone: '206-555-5555',
+        email: 'FremontFish@salmon.org',
+      },
+      {
+        name: 'Tokyo',
+        address: 'Shinjuku',
+        hours: '6am-8pm',
+        phone: '81-3-555-5555',
+        email: 'ShinjukuSalmon@salmon.org',
+      },
+      {
+        name: 'Dubai',
+        address: 'Al Satwa',
+        hours: '6am-8pm',
+        phone: '04-555-5555',
+        email: 'SatwaSalmon@salmon.org',
+      },
+      {
+        name: 'Paris',
+        address: 'Les Catacombes',
+        hours: '6am-8pm',
+        phone: '33-1-555-5555',
+        email: 'CatacombeCookies@salmon.org',
+      },
+      {
+        name: 'Lima',
+        address: 'Callao',
+        hours: '6am-8pm',
+        phone: '567-555-5555',
+        email: 'CallaoCookies@salmon.org',
+      },
+    ];
 
+    for (let i = 0; i < locationDataArray.length; i++) {
+      const parentEl = document.querySelector('#shopLocations');
+      const containerEl = document.createElement('div');
+      
+      const locationHeader = document.createElement('h3');
+      locationHeader.innerText = locationDataArray[i].name;
 
+      const locationImg = document.createElement('img');
+      locationImg.setAttribute('src', imageArray[i]);
+
+      const addressText = document.createElement('p');
+      addressText.innerText = locationDataArray[i].address;
+
+      const hoursText = document.createElement('p');
+      hoursText.innerText = locationDataArray[i].hours;
+
+      const phoneText = document.createElement('p');
+      phoneText.innerText = locationDataArray[i].phone;
+
+      const emailText = document.createElement('p');
+      emailText.innerText = locationDataArray[i].email;
+
+      containerEl.append(locationHeader, locationImg, addressText, hoursText, phoneText, emailText);
+      parentEl.appendChild(containerEl);
+    }
   </script>
 </body>
+
 </html>
