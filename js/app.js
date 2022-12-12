@@ -111,7 +111,7 @@ function renderTableHead(){
   const parentEl = document.querySelector('thead');
   const rowEl = document.createElement('tr');
 
-  const emptyCorner = document.createElement('td');
+  const emptyCorner = document.createElement('th');
   rowEl.appendChild(emptyCorner);
 
   for (let i = 0; i < hoursArray.length; i++) {
